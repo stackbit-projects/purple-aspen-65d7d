@@ -1,0 +1,306 @@
+stackbitVersion: ~0.3.0
+dataDir: packages
+models:
+  manifest:
+    type: data
+    label: Manifest
+    file: react-app/public/manifest.json
+    fields:
+      - type: string
+        name: short_name
+        label: Short Name
+      - type: string
+        name: start_url
+        label: Start Url
+      - type: string
+        name: name
+        label: Name
+      - type: list
+        name: icons
+        label: Icons
+        items:
+          type: object
+          fields:
+            - type: string
+              name: src
+              label: Src
+            - type: string
+              name: sizes
+              label: Sizes
+            - type: string
+              name: type
+              label: Type
+      - type: string
+        name: display
+        label: Display
+      - type: string
+        name: theme_color
+        label: Theme Color
+      - type: string
+        name: background_color
+        label: Background Color
+  cloudbuild:
+    type: data
+    label: Cloudbuild
+    file: services/graph-node/cloudbuild.yaml
+    fields:
+      - type: object
+        name: options
+        label: Options
+        fields:
+          - type: string
+            name: machineType
+            label: Machine Type
+      - type: string
+        name: timeout
+        label: Timeout
+      - type: list
+        name: steps
+        label: Steps
+        items:
+          type: object
+          fields:
+            - type: string
+              name: name
+              label: Name
+            - type: string
+              name: entrypoint
+              label: Entrypoint
+            - type: list
+              name: args
+              label: Args
+              items:
+                type: string
+            - type: list
+              name: secretEnv
+              label: Secret Env
+              items:
+                type: string
+            - type: list
+              name: env
+              label: Env
+              items:
+                type: string
+      - type: list
+        name: images
+        label: Images
+        items:
+          type: string
+      - type: object
+        name: substitutions
+        label: Substitutions
+        fields:
+          - type: string
+            name: _DOCKER_HUB_USER
+            label: DOCKER HUB USER
+      - type: list
+        name: secrets
+        label: Secrets
+        items:
+          type: object
+          fields:
+            - type: string
+              name: kmsKeyName
+              label: Kms Key Name
+            - type: object
+              name: secretEnv
+              label: Secret Env
+              fields:
+                - type: string
+                  name: PASSWORD
+                  label: PASSWORD
+  docker_compose:
+    type: data
+    label: Docker Compose
+    file: services/graph-node/docker-compose.yml
+    fields:
+      - type: string
+        name: version
+        label: Version
+      - type: object
+        name: services
+        label: Services
+        fields:
+          - type: object
+            name: graph-node
+            label: Graph Node
+            fields:
+              - type: string
+                name: image
+                label: Image
+              - type: list
+                name: ports
+                label: Ports
+                items:
+                  type: string
+              - type: list
+                name: depends_on
+                label: Depends On
+                items:
+                  type: string
+              - type: object
+                name: environment
+                label: Environment
+                fields:
+                  - type: string
+                    name: postgres_host
+                    label: Postgres Host
+                  - type: string
+                    name: postgres_user
+                    label: Postgres User
+                  - type: string
+                    name: postgres_pass
+                    label: Postgres Pass
+                  - type: string
+                    name: postgres_db
+                    label: Postgres Db
+                  - type: string
+                    name: ipfs
+                    label: Ipfs
+                  - type: string
+                    name: ethereum
+                    label: Ethereum
+                  - type: string
+                    name: GRAPH_LOG
+                    label: GRAPH LOG
+          - type: object
+            name: ipfs
+            label: Ipfs
+            fields:
+              - type: string
+                name: image
+                label: Image
+              - type: list
+                name: ports
+                label: Ports
+                items:
+                  type: string
+              - type: list
+                name: volumes
+                label: Volumes
+                items:
+                  type: string
+          - type: object
+            name: postgres
+            label: Postgres
+            fields:
+              - type: string
+                name: image
+                label: Image
+              - type: list
+                name: ports
+                label: Ports
+                items:
+                  type: string
+              - type: list
+                name: command
+                label: Command
+                items:
+                  type: string
+              - type: object
+                name: environment
+                label: Environment
+                fields:
+                  - type: string
+                    name: POSTGRES_USER
+                    label: POSTGRES USER
+                  - type: string
+                    name: POSTGRES_PASSWORD
+                    label: POSTGRES PASSWORD
+                  - type: string
+                    name: POSTGRES_DB
+                    label: POSTGRES DB
+              - type: list
+                name: volumes
+                label: Volumes
+                items:
+                  type: string
+  subgraph_template:
+    type: data
+    label: Subgraph Template
+    file: subgraph/src/subgraph.template.yaml
+    fields:
+      - type: string
+        name: specVersion
+        label: Spec Version
+      - type: object
+        name: schema
+        label: Schema
+        fields:
+          - type: string
+            name: file
+            label: File
+      - type: list
+        name: dataSources
+        label: Data Sources
+        items:
+          type: object
+          fields:
+            - type: string
+              name: kind
+              label: Kind
+            - type: string
+              name: name
+              label: Name
+            - type: string
+              name: network
+              label: Network
+            - type: object
+              name: source
+              label: Source
+              fields:
+                - type: string
+                  name: address
+                  label: Address
+                - type: string
+                  name: abi
+                  label: Abi
+                - type: number
+                  name: startBlock
+                  label: Start Block
+                  subtype: int
+            - type: object
+              name: mapping
+              label: Mapping
+              fields:
+                - type: string
+                  name: kind
+                  label: Kind
+                - type: string
+                  name: apiVersion
+                  label: Api Version
+                - type: string
+                  name: language
+                  label: Language
+                - type: list
+                  name: entities
+                  label: Entities
+                  items:
+                    type: string
+                - type: list
+                  name: abis
+                  label: Abis
+                  items:
+                    type: object
+                    fields:
+                      - type: string
+                        name: name
+                        label: Name
+                      - type: string
+                        name: file
+                        label: File
+                - type: list
+                  name: eventHandlers
+                  label: Event Handlers
+                  items:
+                    type: object
+                    fields:
+                      - type: string
+                        name: event
+                        label: Event
+                      - type: string
+                        name: handler
+                        label: Handler
+                - type: string
+                  name: file
+                  label: File
